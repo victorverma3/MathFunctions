@@ -1,4 +1,4 @@
-from BasicMath import *
+from BasicMath import add, sub, mul, div, exp
 
 
 class StochasticProcesses:
@@ -26,19 +26,18 @@ class StochasticProcesses:
 
         if N == "inf":
             if 1 - p < p:
-                return BasicMath.exp(BasicMath.div(q, p), k)
+                return exp(div(q, p), k)
             else:
                 return 1
-
         else:
             if p == 0.5:
-                return BasicMath.sub(1, BasicMath.div(k, N))
+                return sub(1, div(k, N))
             else:
-                return BasicMath.sub(
+                return sub(
                     1,
-                    BasicMath.div(
-                        BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), k)),
-                        BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), N)),
+                    div(
+                        sub(1, exp(div(q, p), k)),
+                        sub(1, exp(div(q, p), N)),
                     ),
                 )
 
@@ -66,25 +65,22 @@ class StochasticProcesses:
 
         if N == "inf":
             if p == 0.5:
-                return BasicMath.mul(k, BasicMath.sub(N, k))
+                return mul(k, sub(N, k))
             else:
-                return BasicMath.add(
-                    BasicMath.div(
-                        BasicMath.mul(
-                            BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), k)), N
-                        ),
-                        BasicMath.mul(
-                            BasicMath.sub(1, BasicMath.mul(2, p)),
-                            BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), N)),
+                return add(
+                    div(
+                        mul(sub(1, exp(div(q, p), k)), N),
+                        mul(
+                            sub(1, mul(2, p)),
+                            sub(1, exp(div(q, p), N)),
                         ),
                     ),
-                    BasicMath.div(k, BasicMath.sub(1, BasicMath.mul(2, p))),
+                    div(k, sub(1, mul(2, p))),
                 )
-
         else:
             if p > 0.5:
                 return "it does not make sense to ask this question"
             if p == 0.5:
                 return "expected time to ruin is infinity"
             else:
-                return BasicMath.div(k, BasicMath.sub(1, BasicMath.mul(2, p)))
+                return div(k, sub(1, mul(2, p)))

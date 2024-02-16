@@ -11,7 +11,6 @@ class BasicMath:
     def div(dividend, divisor, variant="f"):
         if divisor == 0:
             raise ValueError("divide by 0")
-
         if variant not in ["f", "i"]:
             raise ValueError("variant must be f or i")
 
