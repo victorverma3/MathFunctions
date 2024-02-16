@@ -2,7 +2,10 @@ from BasicMath import *
 
 
 class StochasticProcesses:
-    def gamblers_ruin(p, N, k):
+    def gamblers_ruin_probability(p, N, k):
+        """calculates the probability of ruin with winning probability p, target value N, and starting value k"""
+
+        # verifies parameters
         if p < 0 or p > 1:
             raise ValueError("p must be between 0 and 1")
         if type(N) == int:
@@ -18,6 +21,7 @@ class StochasticProcesses:
         if type(k) != int or k < 0:
             raise ValueError("k must be an integer greater than or equal to 0")
 
+        # calculations
         q = 1 - p
 
         if N == "inf":
@@ -37,3 +41,50 @@ class StochasticProcesses:
                         BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), N)),
                     ),
                 )
+
+    def gamblers_ruin_length(p, N, k):
+        """calculates the expected time to ruin with winning probability p, target value N, and starting value k"""
+
+        # verifies parameters
+        if p < 0 or p > 1:
+            raise ValueError("p must be between 0 and 1")
+        if type(N) == int:
+            if N < 1:
+                raise ValueError(
+                    "N must either be an integer greater than 0 or infinity"
+                )
+        else:
+            if N != "inf":
+                raise ValueError(
+                    "N must either be an integer greater than 0 or infinity"
+                )
+        if type(k) != int or k < 0:
+            raise ValueError("k must be an integer greater than or equal to 0")
+
+        # calculations
+        q = 1 - p
+
+        if N == "inf":
+            if p == 0.5:
+                return BasicMath.mul(k, BasicMath.sub(N, k))
+            else:
+                return BasicMath.add(
+                    BasicMath.div(
+                        BasicMath.mul(
+                            BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), k)), N
+                        ),
+                        BasicMath.mul(
+                            BasicMath.sub(1, BasicMath.mul(2, p)),
+                            BasicMath.sub(1, BasicMath.exp(BasicMath.div(q, p), N)),
+                        ),
+                    ),
+                    BasicMath.div(k, BasicMath.sub(1, BasicMath.mul(2, p))),
+                )
+
+        else:
+            if p > 0.5:
+                return "it does not make sense to ask this question"
+            if p == 0.5:
+                return "expected time to ruin is infinity"
+            else:
+                return BasicMath.div(k, BasicMath.sub(1, BasicMath.mul(2, p)))

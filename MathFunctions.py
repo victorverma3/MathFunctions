@@ -20,7 +20,7 @@ if __name__ == "__main__":
     #         right_side=np.array([1, 0, 0, 0, 0, 0, 0]),
     #     )
     # )
-    print(StochasticProcesses.gamblers_ruin(p=0.49292929, N=100, k=50))
-    print(StochasticProcesses.gamblers_ruin(p=0.49292929, N=1000, k=500))
-    print(StochasticProcesses.gamblers_ruin(p=0.5029237, N=100, k=50))
-    print(StochasticProcesses.gamblers_ruin(p=0.5029237, N=1000, k=500))
+    print(StochasticProcesses.gamblers_ruin_probability(p=0.49292929, N=100, k=50))
+    print(StochasticProcesses.gamblers_ruin_probability(p=0.49292929, N=1000, k=500))
+    print(StochasticProcesses.gamblers_ruin_probability(p=0.5029237, N=100, k=50))
+    print(StochasticProcesses.gamblers_ruin_probability(p=0.5029237, N=1000, k=500))
