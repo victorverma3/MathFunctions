@@ -85,6 +85,7 @@ def branching_extinction_probability(gamma, n):
     if type(n) != int or n < 0:
         raise ValueError("k must be an integer greater than or equal to 0")
 
+    # calculations using dynamic programming
     u = [0] * (n + 1)
     u[0] = 0
     if type(gamma) == dict:
