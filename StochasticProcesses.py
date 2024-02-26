@@ -1,4 +1,5 @@
-from BasicMath import add, sub, mul, div, exp
+from BasicMath import add, sub, mul, div, exp, factorial
+import numpy as np
 
 
 def gamblers_ruin_probability(p, N, k):
@@ -78,7 +79,7 @@ def gamblers_ruin_length(p, N, k):
             )
 
 
-def branching_extinction_probability(gamma, n):
+def branching_extinction_probability(distribution, n):
     """calculates the extinction probability of a branching process through time step n, given the gamma distribution and a starting population of 1"""
 
     # verifies parameters
@@ -86,9 +87,30 @@ def branching_extinction_probability(gamma, n):
         raise ValueError("k must be an integer greater than or equal to 0")
 
     # calculations using dynamic programming
+    def phi(distribution, s):
+        if distribution["name"] == "poisson":
+            l = distribution["lambda"]
+            return np.exp(sub(mul(s, l), l))
+        elif distribution["name"] == "geometric":
+            p = distribution["p"]
+            return div(1, sub(1, mul(s, sub(1, p))))
+        elif distribution["name"] == "binomial":
+            n, p = distribution["n"], distribution["p"]
+            return exp(add(sub(1, p), mul(s, p)), n)
+        else:
+            raise ValueError("invalid distribution")
+
     u = [0] * (n + 1)
     u[0] = 0
-    if type(gamma) == dict:
+
+    if distribution["name"] == "custom":
         for j in range(1, n + 1):
-            u[j] = sum(mul(exp(u[j - 1], k), gamma[k]) for k in gamma)
+            u[j] = sum(
+                mul(exp(u[j - 1], k), distribution["values"][k])
+                for k in distribution["values"]
+            )
+    else:
+        for j in range(1, n + 1):
+            u[j] = phi(distribution, u[j - 1])
+
     return {time: prob for time, prob in enumerate(u)}
