@@ -1,3 +1,6 @@
+from math import gamma
+
+
 def add(x, y):
     return x + y
 
@@ -26,3 +29,12 @@ def div(dividend, divisor, variant="f"):
 
 def exp(base, power):
     return base**power
+
+
+def factorial(n):
+    if n == 0:
+        return 1
+    if type(n) == int:
+        return n * factorial(n - 1)
+    else:
+        return gamma(n + 1)
