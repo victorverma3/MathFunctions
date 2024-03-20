@@ -1,9 +1,9 @@
-from BasicMath import add, sub, mul, div, exp, factorial
+from BasicMath import add, sub, mul, div, exp
 import numpy as np
 
 
-def gamblers_ruin_probability(p, N, k):
-    """calculates the probability of ruin with winning probability p, target value N, and starting value k"""
+def gamblers_ruin_before_N_probability(p, N, k):
+    """calculates the probability of ruin before N with winning probability p, target value N, and starting value k"""
 
     # verifies parameters
     if p < 0 or p > 1:
@@ -27,14 +27,10 @@ def gamblers_ruin_probability(p, N, k):
             return 1
     else:
         if p == 0.5:
-            return sub(1, div(k, N))
+            return div(sub(N, k), N)
         else:
-            return sub(
-                1,
-                div(
-                    sub(1, exp(div(q, p), k)),
-                    sub(1, exp(div(q, p), N)),
-                ),
+            return div(
+                sub(exp(div(q, p), k), exp(div(q, p), N)), sub(1, exp(div(q, p), N))
             )
 
 
